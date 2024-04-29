@@ -4,7 +4,7 @@ import joblib
 import numpy as np
 import json
 import pickle
-from chat.suggestion import chatgpt
+# from chat.suggestion import chatgpt
 controller=APIRouter(prefix='/predict')
 class Item(BaseModel):
     symptom:str
