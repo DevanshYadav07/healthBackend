@@ -97,9 +97,7 @@ heart_disease_model = pickle.load(open('app/model/heart_disease_model.sav', 'rb'
 # heart-attack
 @controller.post('/heartattack', status_code=200)
 def heart_analysist(item:Heart):
-    # return {"heart": "you are f*cked"}
-
-    print("symptoms are :",item)
+    # print("symptoms are :",item)
     item_dict = item.dict()
 
     # Extract values from the dictionary and convert to a list
