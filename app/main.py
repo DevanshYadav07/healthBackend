@@ -1,17 +1,21 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from controller.diesease import controller as disease_controller
+from app.controller.diesease import controller as disease_controller
 
 
 # initialise all the variable
 app=FastAPI()
 
 origins =[
-    "http://localhost",
-    "http://localhost:3000",
-    "http://localhost:3000/dashboard/diabetes"
     "*"
 ]
+
+
+@app.get('/')
+def test():
+    return {"hello" : "route is working fine "}
+
+
 
 app.include_router(disease_controller,tags=['assistant'])
 app.add_middleware(

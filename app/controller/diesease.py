@@ -87,9 +87,10 @@ class Parkinson(BaseModel):
 
 
 # loading the saved models
-diabetes_model = pickle.load(open('/Users/devanshyadav/Desktop/Projects/hackky/model/diabetes_model.sav', 'rb'))
-heart_disease_model = pickle.load(open('/Users/devanshyadav/Desktop/Projects/hackky/model/heart_disease_model.sav','rb'))
-parkinsons_model = pickle.load(open('/Users/devanshyadav/Desktop/Projects/hackky/model/parkinsons_model.sav', 'rb'))
+# /model/diabetes_model.sav
+diabetes_model = pickle.load(open('app/model/diabetes_model.sav', 'rb'))
+heart_disease_model = pickle.load(open('app/model/heart_disease_model.sav', 'rb'))
+# parkinsons_model = pickle.load(open('../model/parkinsons_model.sav', 'rb'))
 
 
 
@@ -113,14 +114,6 @@ def heart_analysist(item:Heart):
     else:
         return 'The person does not have any heart disease'
 
-    # print('value of heart predi',heart_prediction)
-
-#cancer
-@controller.post('/cancer',status_code=200)
-def cancer(item:Item):
-
-    print("cancer req body :",item)
-    # return{"cancer":'you have in cance '}
 
 
 #diabetse
@@ -155,9 +148,9 @@ def liver(item:Liver):
     item_list = list(item_dict.values())
     print("liver list: ", item_list,type(item_list))
 
-    model = pickle.load(open('model/liver.pkl','rb'))
+    model = pickle.load(open('app/model/liver.pkl','rb'))
     values = np.asarray(item_list)
-    print("values array as np;",values,type(values))
+    # print("values array as np;",values,type(values))
 
     prediction_result = model.predict(values.reshape(1, -1))[0].item()
     # return prediction_result
@@ -177,30 +170,5 @@ async def kidney(item:Kidney):
     # Extract values from the dictionary and convert to a list
     item_list = list(item_dict.values())
 
-    print("Symptoms are:", item_list)
+    # print("Symptoms are:", item_list)
 
-
-@controller.post('/parkinson',status_code=200)
-async def parkinson(item:Parkinson):
-
-    print("parkinson are :",item)
-    item_dict = item.dict()
-
-    # # Extract values from the dictionary and convert to a list
-    item_list = list(item_dict.values())
-    #
-    print("parkinsonSymptoms are:", item_list)
-    # return item_list
-    parkinsons_prediction = parkinsons_model.predict([item_list])
-    #
-    if (parkinsons_prediction[0] == 1):
-        chat="The person has Parkinson's disease"
-        ai_reply= chatgpt(chat)
-
-        # return "The person has Parkinson's disease"
-        return { "result":"The person has Parkinson's disease",
-                 "suggestion":ai_reply}
-    else:
-        return {"result": "The person has Parkinson's disease",
-        "suggestion": ''}
-        # return "The person does not have Parkinson's disease"
